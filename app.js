@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return availability[b].good - availability[a].good;
         });
 
-        // Display best dates
+        // Display the best dates
         bestDates.forEach(day => {
             const li = document.createElement('li');
             li.textContent = day + ' - Good: ' + availability[day].good + ', Maybe: ' + availability[day].maybe;
