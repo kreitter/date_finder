@@ -1,4 +1,3 @@
-const jsContent = `
 document.addEventListener('DOMContentLoaded', function () {
     const calendar = document.getElementById('calendar');
     const nameInput = document.getElementById('name-input');
@@ -9,11 +8,11 @@ document.addEventListener('DOMContentLoaded', function () {
     let people = [];
     let dates = {};
 
-    // Initialize a calendar with 30 days
+    // Initialize calendar with 30 days
     for (let i = 1; i <= 30; i++) {
         const dayDiv = document.createElement('div');
         dayDiv.classList.add('day');
-        dayDiv.textContent = \`Day \${i}\`;
+        dayDiv.textContent = 'Day ' + i;
         dayDiv.dataset.day = i;
         calendar.appendChild(dayDiv);
 
@@ -37,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const name = nameInput.value.trim();
         if (name) {
             people.push(name);
-            alert(\`\${name} has been added. Please mark your availability on the calendar.\`);
+            alert(name + ' has been added. Please mark your availability on the calendar.');
             nameInput.value = '';
         } else {
             alert('Please enter a valid name.');
@@ -71,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Display best dates
         bestDates.forEach(day => {
             const li = document.createElement('li');
-            li.textContent = \`Day \${day} - Good: \${availability[day].good}, Maybe: \${availability[day].maybe}\`;
+            li.textContent = 'Day ' + day + ' - Good: ' + availability[day].good + ', Maybe: ' + availability[day].maybe;
             bestDatesList.appendChild(li);
         });
     });
