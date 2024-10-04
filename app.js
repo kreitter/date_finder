@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let people = [];
     let dates = {};
 
-    // Initialize calendar with 30 days
+    // Initialize a calendar with 30 days
     for (let i = 1; i <= 30; i++) {
         const dayDiv = document.createElement('div');
         dayDiv.classList.add('day');
