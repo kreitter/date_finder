@@ -8,12 +8,15 @@ document.addEventListener('DOMContentLoaded', function () {
     let people = [];
     let dates = {};
 
-    // Initialize calendar with 30 days
-    for (let i = 1; i <= 30; i++) {
+    // Initialize calendar with the next 365 days
+    const today = new Date();
+    for (let i = 0; i < 365; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() + i);
         const dayDiv = document.createElement('div');
         dayDiv.classList.add('day');
-        dayDiv.textContent = 'Day ' + i;
-        dayDiv.dataset.day = i;
+        dayDiv.textContent = date.toDateString();
+        dayDiv.dataset.day = date.toISOString().split('T')[0];
         calendar.appendChild(dayDiv);
 
         dayDiv.addEventListener('click', function () {
@@ -70,8 +73,33 @@ document.addEventListener('DOMContentLoaded', function () {
         // Display best dates
         bestDates.forEach(day => {
             const li = document.createElement('li');
-            li.textContent = 'Day ' + day + ' - Good: ' + availability[day].good + ', Maybe: ' + availability[day].maybe;
+            li.textContent = day + ' - Good: ' + availability[day].good + ', Maybe: ' + availability[day].maybe;
             bestDatesList.appendChild(li);
         });
     });
+
+    // Store data for multiple users
+    function storeData() {
+        localStorage.setItem('calendarData', JSON.stringify({ people, availability: dates }));
+    }
+
+    function loadData() {
+        const data = JSON.parse(localStorage.getItem('calendarData'));
+        if (data) {
+            people = data.people;
+            dates = data.availability;
+            // Update UI based on loaded data
+            document.querySelectorAll('.day').forEach(day => {
+                const dayNumber = day.dataset.day;
+                if (dates[dayNumber]) {
+                    const status = dates[dayNumber].status;
+                    day.dataset.status = status;
+                    day.className = 'day ' + (status === 'good' ? 'selected-good' : status === 'maybe' ? 'selected-maybe' : 'selected-bad');
+                }
+            });
+        }
+    }
+
+    loadData();
+    window.addEventListener('beforeunload', storeData);
 });
